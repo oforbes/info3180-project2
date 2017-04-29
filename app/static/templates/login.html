@@ -1,0 +1,27 @@
+<div class="container v-center" ng-controller="LoginController" style="width:50%;margin-left:30%">
+    <h2 class="text-center" style="font-family:Calibri;font-size:50px;margin-left:-30%">Login</h2><br>
+    <div ng-form="loginForm" ng-class="{'has-error':
+    (loginForm.email.$invalid && loginForm.email.$dirty) || 
+    (loginForm.password.$invalid && loginForm.password.$dirty)}" class="row text-center" style="">
+      <div class="form-group">
+        <label style="font-size:25px;margin-left:-30%">Email Address</label>
+        <input type="text" class="form-control" name='email' ng-model="email" placeholder="Enter your email" required style="width:450px;border-radius:0px;">
+        </div>
+        <uib-alert type="danger" ng-if="loginForm.email.$dirty && loginForm.email.$invalid">Please enter your email</uib-alert>
+      <div class="form-group">
+        <label style="font-size:25px;margin-left:-30%">Password</label>
+        <input type="password" class="form-control" name="password" ng-model="password" placeholder="Enter your password" required style="width:450px;border-radius:0px">
+      </div>
+      <uib-alert type="danger" ng-if="loginForm.password.$dirty && loginForm.password.$invalid">Please enter your password</uib-alert>
+      <br>
+      <div class="col-lg-12">
+        <uib-alert type="danger" ng-if="errorMessage">{{errorMessage}}</uib-alert>
+        <div class="col-lg-6 pull-left">
+          <a class="btn" href="#/" style="width:200px;height:50px;background-color:#2ecc71;color:white;line-height:50px">Go Back</a>
+      </div>
+        <div class="col-lg-6 pull-right">
+        <button type="submit" class="btn" ng-click="login()" style="width:200px;height:50px;background-color:#2ecc71;color:white;line-height:50px">Login</button>
+      </div>
+      </div>
+  </div><br>
+</div>

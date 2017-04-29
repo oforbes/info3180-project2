@@ -1,0 +1,41 @@
+.welcome {
+    height: 50%;
+    width: 50%;
+    display:block;
+    overflow: visible;
+    margin: auto;
+    position: absolute;
+    background-color:#ecf0f1;;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+body{
+    background: url('../img/dbz.jpg');
+    background-repeat: repeat;
+    font-family: Calibri;
+    max-height:1000px;
+}
+.wrapper {
+    background: url('../img/dbz.jpg');
+    background-repeat: repeat
+}
+.container{
+    background-color:#ecf0f1;
+    background-repeat: repeat;
+}
+
+
+nav {
+    background-color:#27ae60;
+    background-repeat: repeat;
+    color:black;
+}
+
+
+
+.but{
+    background-color:#27ae60;
+    width:150px;
+    height:40px;
+    
+}
