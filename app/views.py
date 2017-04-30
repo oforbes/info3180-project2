@@ -152,7 +152,7 @@ def send(userid):
     msg['To'] = ", ".join(emaillist)
     msg['Subject'] = subject
     header = "WISHLIST FROM " + sender + " <" + fromaddr + "> " + "ACCESS WISHLIST AT: "
-    footer = " "
+    footer = " footer"
     msg.attach(MIMEText(header,'plain'))
     msg.attach(MIMEText(message,'plain'))
     msg.attach(MIMEText('Their Wishlist: '+ allWishes,'plain'))
