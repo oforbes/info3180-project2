@@ -21,13 +21,11 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-#Landing page
 @app.route('/')
 def index():
     """Render website's home page."""
     return app.send_static_file('index.html')
     
-#Sign up page, cURL with JSON Data or POSTMAN with POST of firstname,lastname,username,password,email
 @app.route('/api/user/register', methods=['POST'])
 def signup():
     json_data = json.loads(request.data)
@@ -40,7 +38,6 @@ def signup():
         response = jsonify({"error":"1","data":{},'message':'not signed up'})
     return response
 
-#Log in page for a registered user, cURL or POSTMAN with POST request with JSON Data of email,password
 @app.route('/api/user/login', methods=["POST"])
 def login():
     json_data = json.loads(request.data)
@@ -54,7 +51,6 @@ def login():
         response = jsonify({"error":"1","data":{},"message":'not logged'})
     return response
 
-#Log out a user, cURL or POSTMAN with POST request of JSON Data of token
 @app.route('/api/user/logout',methods=["POST"])
 def logout():
     json_data = json.loads(request.data)
@@ -67,7 +63,6 @@ def logout():
         response = jsonify({'status':'did not log out'})
     return response
     
-#View a registered user page, cURL or POSTMAN with GET request
 @app.route('/api/user/<userid>',methods=["GET"])
 def user(userid):
     user = db.session.query(User).filter_by(id=userid).first()
@@ -77,7 +72,6 @@ def user(userid):
         response = jsonify({"error":"1","data":{},'message':'did not retrieve user'})
     return response
     
-#View all users page, cURL or POSTMAN with GET request
 @app.route('/api/users',methods=["GET"])
 def users():
     users = db.session.query(User).all()
@@ -90,7 +84,6 @@ def users():
         response = jsonify({"error":"1","data":{},"message":"did not retrieve all users"})
     return response
 
-#New Wish, cURL or POSTMAN with GET request or POST request of JSON Data of userid,url,thumbnail,title,description
 @app.route('/api/user/<userid>/wishlist',methods=["GET","POST"])
 def wishes(userid):
     if request.method=="GET":
@@ -116,7 +109,6 @@ def wishes(userid):
             response = jsonify({"error":"1", "data":{},'message':'did not create wish'})
         return response
 
-#Used in image search on new wishes, cURL or POSTMAN with GET request with ?url= with the url desired
 @app.route('/api/thumbnail/process', methods=['GET'])
 def get_images():
     url = request.args.get('url')
@@ -138,7 +130,6 @@ def get_images():
         response = jsonify({'error':'1','data':{},'message':'Unable to extract thumbnails'})
     return response
     
-#Sends emails to recipients about their wishlists, cURL or POSTMAN with POST request of JSON Data of the userid,emails,message,subject,wishes
 @app.route('/api/send/<userid>',methods=['POST'])
 def send(userid):
     user = db.session.query(User).filter_by(id=userid).first()
@@ -160,8 +151,8 @@ def send(userid):
     msg['From'] = fromaddr
     msg['To'] = ", ".join(emaillist)
     msg['Subject'] = subject
-    header = "Good Day, this is an email from " + sender + " <" + fromaddr + "> " + "to you about their wishlist. This is the attached message: "
-    footer = "You can view this wishlist, among others, by searching for their name at this link: "
+    header = "WISHLIST FROM " + sender + " <" + fromaddr + "> " + "ACCESS WISHLIST AT: "
+    footer = " "
     msg.attach(MIMEText(header,'plain'))
     msg.attach(MIMEText(message,'plain'))
     msg.attach(MIMEText('Their Wishlist: '+ allWishes,'plain'))
@@ -177,7 +168,6 @@ def send(userid):
     response = jsonify({"error":"null","data":{"emails":emaillist,"subject":subject,"message":message,"wishes":allWishes},"message":"Success"})
     return response
             
-#Used for time added on items
 def timeinfo(entry):
     day = time.strftime("%a")
     date = time.strftime("%d")
@@ -195,6 +185,5 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
     return response
   
-#Runs application
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")
